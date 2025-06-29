@@ -1,0 +1,272 @@
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+  <title>Motiv</title>  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Cinzel:wght@700&display=swap" rel="stylesheet">  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />  
+  <style>  
+    * {  
+      margin: 0;  
+      padding: 0;  
+      box-sizing: border-box;  
+      font-family: 'Poppins', sans-serif;  
+    }  
+    body {  
+      background: linear-gradient(135deg, #000000, #434343);  
+      color: white;  
+      min-height: 100vh;  
+      display: flex;  
+      flex-direction: column;  
+      position: relative;  
+      overflow-x: hidden;  
+    }  
+    header {  
+      display: flex;  
+      justify-content: space-between;  
+      align-items: center;  
+      padding: 1rem;  
+      backdrop-filter: blur(10px);  
+      background: rgba(255, 255, 255, 0.05);  
+    }  
+    .menu-icon {  
+      font-size: 24px;  
+      color: white;  
+      cursor: pointer;  
+    }  
+    #appTitle {  
+      font-family: 'Cinzel', serif;  
+      font-size: 24px;  
+      color: white;  
+    }  
+    header img {  
+      width: 40px;  
+      height: 40px;  
+      border-radius: 50%;  
+      border: 2px solid white;  
+      cursor: pointer;  
+    }  
+    main {  
+      padding: 1rem;  
+      flex: 1;  
+    }  
+    .quote-card {  
+      background: rgba(255, 255, 255, 0.08);  
+      border-radius: 16px;  
+      padding: 1rem;  
+      margin-bottom: 1rem;  
+      backdrop-filter: blur(10px);  
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);  
+      position: relative;  
+    }  
+    .quote-text {  
+      font-size: 16px;  
+      line-height: 1.6;  
+    }  
+    .quote-author {  
+      text-align: right;  
+      margin-top: 8px;  
+      font-size: 13px;  
+      color: #ccc;  
+    }  
+    .fav-icon {  
+      position: absolute;  
+      top: 10px;  
+      right: 10px;  
+      font-size: 18px;  
+      color: gold;  
+      cursor: pointer;  
+      transition: transform 0.3s ease;  
+    }  
+    .fav-icon.clicked {  
+      animation: pulse-star 0.6s ease;  
+    }  
+    .quote-actions {  
+      display: flex;  
+      justify-content: flex-start;  
+      align-items: center;  
+      gap: 24px;  
+      margin-top: 12px;  
+    }  
+    .quote-actions i {  
+      font-size: 18px;  
+      cursor: pointer;  
+    }  
+    .quote-actions span {  
+      font-size: 14px;  
+      margin-left: 6px;  
+    }  
+    .like-anim, .save-anim {  
+      animation: like-bounce 0.4s ease;  
+    }  
+    @keyframes pulse-star {  
+      0% { transform: scale(1); filter: drop-shadow(0 0 0px #FFD700); }  
+      50% { transform: scale(1.4); filter: drop-shadow(0 0 8px #FFD700); }  
+      100% { transform: scale(1); filter: drop-shadow(0 0 0px #FFD700); }  
+    }  
+    @keyframes like-bounce {  
+      0% { transform: scale(1); color: #ff4d6d; }  
+      50% { transform: scale(1.5); color: #ff1a45; }  
+      100% { transform: scale(1); }  
+    }  
+    nav {  
+      display: flex;  
+      justify-content: space-around;  
+      align-items: center;  
+      padding: 0.6rem 0;  
+      background: rgba(255, 255, 255, 0.05);  
+      backdrop-filter: blur(10px);  
+      border-top: 1px solid rgba(255, 255, 255, 0.1);  
+      position: sticky;  
+      bottom: 0;  
+    }  
+    nav i {  
+      font-size: 22px;  
+      color: white;  
+      padding: 10px;  
+      border-radius: 14px;  
+      background: rgba(255,255,255,0.07);  
+      backdrop-filter: blur(12px);  
+      transition: background 0.3s;  
+    }  
+    nav i:hover {  
+      background: rgba(255,255,255,0.15);  
+    }  
+    .tab-content {  
+      display: none;  
+    }  
+    .tab-content.active {  
+      display: block;  
+    }  
+    .language-menu {  
+      position: fixed;  
+      top: 50%;  
+      left: 50%;  
+      transform: translate(-50%, -50%);  
+      background: rgba(255, 255, 255, 0.05);  
+      backdrop-filter: blur(14px);  
+      padding: 1rem 2rem;  
+      border-radius: 20px;  
+      display: none;  
+      z-index: 1000;  
+      flex-direction: column;  
+      align-items: center;  
+    }  
+    .language-menu button {  
+      background: rgba(255,255,255,0.07);  
+      backdrop-filter: blur(10px);  
+      border-radius: 16px;  
+      color: white;  
+      font-size: 16px;  
+      border: none;  
+      padding: 0.5rem 1rem;  
+      margin: 0.3rem 0;  
+      cursor: pointer;  
+      transition: background 0.3s;  
+      display: flex;  
+      align-items: center;  
+      gap: 0.5rem;  
+    }  
+    .language-menu button:hover {  
+      background: rgba(255,255,255,0.15);  
+    }  
+    .overlay {  
+      position: fixed;  
+      top: 0;  
+      left: 0;  
+      width: 100%;  
+      height: 100%;  
+      background: rgba(0,0,0,0.4);  
+      backdrop-filter: blur(6px);  
+      z-index: 999;  
+      display: none;  
+    }  
+  </style>  
+</head>  
+<body>  
+  <div class="overlay" onclick="toggleLanguageMenu(false)"></div>  
+  <div class="language-menu" id="langMenu">  
+    <button onclick="changeLanguage('uz')"><span>🇺🇿</span> O'zbekcha</button>  
+    <button onclick="changeLanguage('ru')"><span>🇷🇺</span> Русский</button>  
+    <button onclick="changeLanguage('en')"><span>🇬🇧</span> English</button>  
+  </div>    <header>  
+    <i class="fas fa-bars menu-icon" onclick="toggleLanguageMenu(true)"></i>  
+    <h1 id="appTitle">Motiv</h1>  
+    <img src="https://i.pravatar.cc/150?img=5" alt="Profile" onclick="showTab('profile')" style="cursor:pointer;" />  
+  </header>    <main>  
+    <section id="home" class="tab-content active">  
+      <div class="quote-card">  
+        <div class="quote-text" id="quoteText">Harakat hech qachon zoye ketmaydi.</div>  
+        <div class="quote-author">@whynier</div>  
+        <i class="fas fa-star fav-icon" onclick="toggleFav(this)"></i>  
+        <div class="quote-actions">  
+          <div style="display: flex; align-items: center;">  
+            <i class="fas fa-heart" onclick="likeQuote(this)"></i>  
+            <span class="like-count">0</span>  
+          </div>  
+          <div style="display: flex; align-items: center;">  
+            <i class="fas fa-comment"></i>  
+            <span class="comment-count">0</span>  
+          </div>  
+          <div style="display: flex; align-items: center;">  
+            <i class="fas fa-bookmark" onclick="saveQuote(this)"></i>  
+            <span class="save-count">0</span>  
+          </div>  
+        </div>  
+      </div>  
+    </section>  
+    <section id="search" class="tab-content">  
+      <div style="text-align:center; opacity: 0.7;">Search bo‘limi (hozircha bo‘sh)</div>  
+    </section>  
+    <section id="upload" class="tab-content">  
+      <div style="text-align:center; opacity: 0.7;">Upload bo‘limi (hozircha bo‘sh)</div>  
+    </section>  
+    <section id="favs" class="tab-content">  
+      <div style="text-align:center; opacity: 0.7;">Saralangan gaplar</div>  
+    </section>  
+    <section id="profile" class="tab-content">  
+      <div style="text-align:center; opacity: 0.7;">Profil bo‘limi</div>  
+    </section>  
+  </main>    <nav>  
+    <i class="fas fa-home" onclick="showTab('home')"></i>  
+    <i class="fas fa-search" onclick="showTab('search')"></i>  
+    <i class="fas fa-plus" onclick="showTab('upload')"></i>  
+    <i class="fas fa-star" onclick="showTab('favs')"></i>  
+    <i class="fas fa-user" onclick="showTab('profile')"></i>  
+  </nav>    <script>  
+    function toggleFav(icon) {  
+      icon.classList.add("clicked");  
+      setTimeout(() => icon.classList.remove("clicked"), 600);  
+    }  
+    function likeQuote(heart) {  
+      const count = heart.nextElementSibling;  
+      let num = parseInt(count.textContent);  
+      num++;  
+      count.textContent = num;  
+      heart.classList.add("like-anim");  
+      setTimeout(() => heart.classList.remove("like-anim"), 400);  
+    }  
+    function saveQuote(bookmark) {  
+      const count = bookmark.nextElementSibling;  
+      let num = parseInt(count.textContent);  
+      num++;  
+      count.textContent = num;  
+      bookmark.classList.add("save-anim");  
+      setTimeout(() => bookmark.classList.remove("save-anim"), 400);  
+    }  
+    function showTab(id) {  
+      document.querySelectorAll('.tab-content').forEach(tab => {  
+        tab.classList.remove('active');  
+      });  
+      document.getElementById(id).classList.add('active');  
+    }  
+    function toggleLanguageMenu(show) {  
+      const menu = document.getElementById('langMenu');  
+      const overlay = document.querySelector('.overlay');  
+      menu.style.display = show ? 'flex' : 'none';  
+      overlay.style.display = show ? 'block' : 'none';  
+    }  
+    function changeLanguage(lang) {  
+      toggleLanguageMenu(false);  
+    }  
+  </script>  </body>
